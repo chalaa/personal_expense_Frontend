@@ -7,6 +7,7 @@ import SignUp from './MainComponents/SignUp';
 import Dashboard from './MainComponents/Dashboard';
 import Income from './MainComponents/Income';
 import Expense from './MainComponents/Expense';
+import Category  from './MainComponents/Category';
 import AddExpense from './MainComponents/AddExpense';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './components/NotFound';
@@ -31,7 +32,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="/income" element={<PrivateRoute><Income /></PrivateRoute>} />
           <Route path="/expense" element={<PrivateRoute><Expense /></PrivateRoute>} />
-          <Route path="/categories" element={<PrivateRoute><Expense /></PrivateRoute>} />
+          <Route path="/categories" element={<PrivateRoute><Category /></PrivateRoute>} />
           <Route path="/expense/add" element={<PrivateRoute><AddExpense /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
