@@ -97,7 +97,7 @@ const TableMan: React.FC = () => {
         Cell: () => (
           <Group spacing="xs">
             <Button variant="outline" size="xs">View</Button>
-            <Button color="red" size="xs" >Delete</Button>
+            <Button color="red" size="xs" variant='filled'>Delete</Button>
           </Group>
         ),
       }

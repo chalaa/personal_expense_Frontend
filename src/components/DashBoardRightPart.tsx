@@ -14,17 +14,6 @@ const DashBoardRightPart: React.FC = () => {
           <div className="bg-white p-4 rounded-lg shadow-lg mb-6 col-span-1 sm:col-span-1 lg:col-span-2">
             <BarChart />
           </div>
-            {/* <Card title="Line Graph" width="col-span-1 sm:col-span-1 lg:col-span-2">
-                <div className="bg-white p-4 rounded-lg shadow-lg mb-6 h-">
-                <LineChart />
-                </div>
-            </Card>
-            <Card title="Bar Chart" width="col-span-1 sm:col-span-1 lg:col-span-2">
-                <div className="bg-white p-4 rounded-lg shadow-lg">
-                <BarChart />
-                </div>
-            </Card> */}
-            
             
         </div>
         
