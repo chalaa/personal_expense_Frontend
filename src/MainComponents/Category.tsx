@@ -1,36 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/index";
-import { fetchCategories, addCategory, updateCategory, deleteCategory } from "../store/categorySlice";
+import {
+  fetchCategories,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+} from "../store/categorySlice";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import RightPart from "../components/RightPart";
 import DataTable from "react-data-table-component";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../components/Modal";
 
 const Category: React.FC = () => {
   const columns = [
     {
-      name: 'ID',
+      name: "ID",
       selector: (row: { id: string }) => row.id,
       sortable: true,
     },
     {
-      name: 'Name',
+      name: "Name",
       selector: (row: { name: string }) => row.name,
       sortable: true,
     },
     {
-      name: 'Actions',
+      name: "Actions",
       cell: (row: { id: string }) => (
         <div className="flex gap-3">
           <button
             className="cursor-pointer"
             onClick={() => {
               const category = categories.find((cat) => cat.id === row.id);
-              openUpdateModal({id:row.id, name:category?.name || ""})
+              openUpdateModal({ id: row.id, name: category?.name || "" });
             }}
           >
             <FontAwesomeIcon icon={faEdit} color="blue" />
@@ -43,15 +48,17 @@ const Category: React.FC = () => {
           </button>
         </div>
       ),
-    }
+    },
   ];
 
   const [formData, setFormData] = useState({ name: "" });
-  const [updateFormData, setUpdateFormData] = useState({ id: "", name:""});
+  const [updateFormData, setUpdateFormData] = useState({ id: "", name: "" });
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
-  const { categories, loading, error } = useSelector((state: RootState) => state.category);
+  const { categories, loading, error } = useSelector(
+    (state: RootState) => state.category
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -111,14 +118,16 @@ const Category: React.FC = () => {
                   />
                 </div>
               </div>
-              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+              {error && (
+                <p className="text-red-500 text-sm text-center">{error}</p>
+              )}
               <div className="!mt-8">
                 <button
                   type="submit"
                   className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
                   disabled={loading}
                 >
-                  {loading ? 'Adding Category...' : 'Add Category'}
+                  {loading ? "Adding Category..." : "Add Category"}
                 </button>
               </div>
             </form>
@@ -136,7 +145,7 @@ const Category: React.FC = () => {
         </RightPart>
       </div>
       <Modal show={showModal} onClose={closeUpdateModal}>
-        <h3 className= "mb-3 text-md text-blue-600">Update Category</h3>
+        <h3 className="mb-3 text-md text-blue-600">Update Category</h3>
 
         <form onSubmit={handleUpdateCategory} className="space-y-4">
           <div>
@@ -160,7 +169,7 @@ const Category: React.FC = () => {
               className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
               disabled={loading}
             >
-              {loading ? 'Updating Category...' : 'Update Category'}
+              {loading ? "Updating Category..." : "Update Category"}
             </button>
           </div>
         </form>
