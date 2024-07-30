@@ -18,7 +18,6 @@ const Login: React.FC = () => {
     const resultAction = await dispatch(loginUser(formData));
     if (loginUser.fulfilled.match(resultAction)) {
       navigate('/dashboard');
-      console.log(resultAction)
     }
   };
 

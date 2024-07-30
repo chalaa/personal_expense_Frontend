@@ -11,6 +11,7 @@ import Category  from './MainComponents/Category';
 import AddExpense from './MainComponents/AddExpense';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './components/NotFound';
+import UpdateCategory from './components/UpdateCategory';
 
 const App: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -33,6 +34,7 @@ const App: React.FC = () => {
           <Route path="/income" element={<PrivateRoute><Income /></PrivateRoute>} />
           <Route path="/expense" element={<PrivateRoute><Expense /></PrivateRoute>} />
           <Route path="/categories" element={<PrivateRoute><Category /></PrivateRoute>} />
+          <Route path="/categories/:id" element={<PrivateRoute><UpdateCategory /></PrivateRoute>} />
           <Route path="/expense/add" element={<PrivateRoute><AddExpense /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>

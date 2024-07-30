@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { RootState } from "./index";
 export interface Category {
     id: string;
     name: string;
@@ -30,12 +30,18 @@ interface ErrorResponse {
 export const fetchCategories = createAsyncThunk<
     Category[],
     void,
-    { rejectValue: ErrorResponse }
+    { rejectValue: ErrorResponse; state:RootState }
 >(
     "category/fetchCategories",
-    async (_, { rejectWithValue }) => {
+    async (_, { getState, rejectWithValue }) => {
+        const token = getState().auth.token;
         try {
-            const { data } = await axios.get("http://127.0.0.1:8000/api/categories");
+            const { data } = (await axios.get("http://127.0.0.1:8000/api/category",{
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            }));
             return data;
         } catch (error: any) {
             let errorMessage = 'An error occurred';
@@ -51,12 +57,20 @@ export const fetchCategories = createAsyncThunk<
 export const addCategory = createAsyncThunk<
     CategoryPayload,
     { name: string },
-    { rejectValue: ErrorResponse }
+    { rejectValue: ErrorResponse, state:RootState }
 >(
     "category/addCategory",
-    async (categoryData: { name: string }, { rejectWithValue }) => {
+    async (categoryData: { name: string }, { getState, rejectWithValue }) => {
+        const token = getState().auth.token;
         try {
-            const { data } = await axios.post("http://127.0.0.1:8000/api/category", categoryData);
+            const { data } = await axios.post("http://127.0.0.1:8000/api/category", categoryData,
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
             return data;
         } catch (error: any) {
             let errorMessage = 'An error occurred';
@@ -72,12 +86,20 @@ export const addCategory = createAsyncThunk<
 export const updateCategory = createAsyncThunk<
     CategoryPayload,
     { id: string; name: string },
-    { rejectValue: ErrorResponse }
+    { rejectValue: ErrorResponse, state:RootState }
 >(
     "category/updateCategory",
-    async (categoryData: { id: string; name: string }, { rejectWithValue }) => {
+    async (categoryData: { id: string; name: string }, { rejectWithValue, getState }) => {
+        const token = getState().auth.token;
         try {
-            const { data } = await axios.put(`http://127.0.0.1:8000/api/category/${categoryData.id}`, categoryData);
+            const { data } = await axios.put(`http://127.0.0.1:8000/api/category/${categoryData.id}`, categoryData,
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
             return data;
         } catch (error: any) {
             let errorMessage = 'An error occurred';
@@ -93,12 +115,20 @@ export const updateCategory = createAsyncThunk<
 export const deleteCategory = createAsyncThunk<
     string,
     { id: string },
-    { rejectValue: ErrorResponse }
+    { rejectValue: ErrorResponse, state:RootState }
 >(
     "category/deleteCategory",
-    async ({ id }, { rejectWithValue }) => {
+    async ({ id }, { rejectWithValue, getState }) => {
+        const token = getState().auth.token;
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/category/${id}`);
+            await axios.delete(`http://127.0.0.1:8000/api/category/${id}`,
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                }
+            );
             return id;
         } catch (error: any) {
             let errorMessage = 'An error occurred';

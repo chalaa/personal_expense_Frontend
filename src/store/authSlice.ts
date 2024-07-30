@@ -17,12 +17,12 @@ const initialState: AuthState = {
 
 interface RegisterUserPayload {
   user: { name: string; email: string };
-  token: string;
+  authorisation : {token: string ; type:string;  status:string };
 }
 
 interface LoginUserPayload {
   user: { name: string; email: string };
-  token: string;
+  authorisation : {token: string ; type:string;  status:string };
 }
 
 interface ErrorResponse {
@@ -38,7 +38,7 @@ export const registerUser = createAsyncThunk<
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/register", userData);
-      console.log(userData);
+      
       return response.data;
     } catch (error) {
       let errorMessage = 'An error occurred';
@@ -87,8 +87,8 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action: PayloadAction<RegisterUserPayload>) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = {name:action.payload.user.name,email:action.payload.user.email};
+        state.token = action.payload.authorisation.token;
       })
       .addCase(registerUser.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
         state.loading = false;
@@ -100,8 +100,8 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<LoginUserPayload>) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = {name:action.payload.user.name,email:action.payload.user.email};
+        state.token = action.payload.authorisation.token;
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
         state.loading = false;
