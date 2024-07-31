@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/index";
 import { fetchExpenses, deleteExpense } from "../store/expenseSlice";
+import { fetchCategories } from "../store/categorySlice";
 import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +32,7 @@ const Expense: React.FC = () => {
       name: 'Action',
       cell: (row: { id: string }) => (
         <div className="flex gap-3">
-          <Link to={`/update-expense/${row.id}`}>
+          <Link to={`edit/${row.id}`}>
             <button>
               <FontAwesomeIcon icon={faEdit} color="blue" />
             </button>
@@ -51,14 +52,14 @@ const Expense: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchExpenses());
-    console.log("expenses")
-    console.log(expenses)
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const handleDeleteExpense = async (id: string) => {
     await dispatch(deleteExpense({ id }));
   };
 
+  console.log(expenses)
   return (
     <>
       <Header />

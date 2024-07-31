@@ -5,13 +5,14 @@ import { addExpense } from "../store/expenseSlice";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import RightPart from "../components/RightPart";
+import { useNavigate } from "react-router-dom";
 
 const AddExpense: React.FC = () => {
   const [formData, setFormData] = useState({ amount: 0, date: "", description: "", category: { id: "", name: "" } });
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error } = useSelector((state: RootState) => state.expense);
   const categories = useSelector((state:RootState) => state.category).categories;
-
+  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -23,10 +24,9 @@ const AddExpense: React.FC = () => {
   const add_expense = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(addExpense(formData));
-    setFormData({ amount: 0, date: "", description: "", category: { id: "", name: "" } });
+    navigate("/expense")
   };
 
-  console.log(formData)
 
   return (
     <>
@@ -35,6 +35,7 @@ const AddExpense: React.FC = () => {
         <SideBar />
         <RightPart>
         <div className="mb-3">
+          <p>Add Expense</p>
       <form onSubmit={add_expense} className="mt-8 space-y-4">
         <div>
           <label className="text-gray-800 text-sm mb-2 block">Amount</label>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { RootState } from "./index";
 import { Category } from "./categorySlice";
 
-export interface Expense {
+export interface Income {
     id: string;
     amount: number;
     date: string;
@@ -11,40 +11,40 @@ export interface Expense {
     category: Category;
 }
 
-export interface ExpenseState {
-    expenses: Expense[];
+export interface IncomeState {
+    incomes: Income[];
     loading: boolean;
     error: string | null;
 }
 
-const initialState: ExpenseState = {
-    expenses: [],
+const initialState: IncomeState = {
+    incomes: [],
     loading: false,
     error: null,
 };
 
-interface ExpensePayload {
-    expense: Expense;
+interface IncomePayload {
+    income: Income;
 }
 
 interface ErrorResponse {
     message: string;
 }
 
-// Fetch Expenses
-export const fetchExpenses = createAsyncThunk<
-    Expense[],
+// Fetch Incomes
+export const fetchIncomes = createAsyncThunk<
+    Income[],
     void,
     {
         rejectValue: ErrorResponse;
         state: RootState;
     }
 >(
-    "expense/fetchExpenses",
+    "income/fetchIncomes",
     async (_, { getState, rejectWithValue }) => {
         const token = getState().auth.token;
         try {
-            const { data } = await axios.get("http://127.0.0.1:8000/api/expense", {
+            const { data } = await axios.get("http://127.0.0.1:8000/api/income", {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -61,27 +61,26 @@ export const fetchExpenses = createAsyncThunk<
     }
 );
 
-// Add Expense
-export const addExpense = createAsyncThunk<
-    ExpensePayload,
+// Add Income
+export const addIncome = createAsyncThunk<
+    IncomePayload,
     { amount: number; date: string; description: string; category: Category },
     {
         rejectValue: ErrorResponse;
         state: RootState;
     }
 >(
-    "expense/addExpense",
-    async (expenseData, { getState, rejectWithValue }) => {
+    "income/addIncome",
+    async (incomeData, { getState, rejectWithValue }) => {
         const token = getState().auth.token;
         try {
-            const { data } = await axios.post("http://127.0.0.1:8000/api/expense", {"amount":expenseData.amount,"date":expenseData.date,"description":expenseData.description,"category_id":expenseData.category.id}, {
+            const { data } = await axios.post("http://127.0.0.1:8000/api/income", {"amount":incomeData.amount,"date":incomeData.date,"description":incomeData.description,"category_id":incomeData.category.id}, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            console.log(data)
-            return { expense: data.data };
+            return { income: data.data };
         } catch (error: any) {
             let errorMessage = 'An error occurred';
             if (axios.isAxiosError(error) && error.response) {
@@ -92,26 +91,26 @@ export const addExpense = createAsyncThunk<
     }
 );
 
-// Update Expense
-export const updateExpense = createAsyncThunk<
-    ExpensePayload,
+// Update Income
+export const updateIncome = createAsyncThunk<
+    IncomePayload,
     { id: string; amount: number; date: string; description: string; category: Category },
     {
         rejectValue: ErrorResponse;
         state: RootState;
     }
 >(
-    "expense/updateExpense",
-    async (expenseData, { getState, rejectWithValue }) => {
+    "income/updateIncome",
+    async (incomeData, { getState, rejectWithValue }) => {
         const token = getState().auth.token;
         try {
-            const { data } = await axios.put(`http://127.0.0.1:8000/api/expense/${expenseData.id}`, expenseData, {
+            const { data } = await axios.put(`http://127.0.0.1:8000/api/income/${incomeData.id}`, incomeData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            return { expense: data.data };
+            return { income: data.data };
         } catch (error: any) {
             let errorMessage = 'An error occurred';
             if (axios.isAxiosError(error) && error.response) {
@@ -122,8 +121,8 @@ export const updateExpense = createAsyncThunk<
     }
 );
 
-// Delete Expense
-export const deleteExpense = createAsyncThunk<
+// Delete Income
+export const deleteIncome = createAsyncThunk<
     string,
     { id: string },
     {
@@ -131,11 +130,11 @@ export const deleteExpense = createAsyncThunk<
         state: RootState;
     }
 >(
-    "expense/deleteExpense",
+    "income/deleteIncome",
     async ({ id }, { getState, rejectWithValue }) => {
         const token = getState().auth.token;
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/expense/${id}`, {
+            await axios.delete(`http://127.0.0.1:8000/api/income/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -152,64 +151,64 @@ export const deleteExpense = createAsyncThunk<
     }
 );
 
-const expenseSlice = createSlice({
-    name: "expense",
+const incomeSlice = createSlice({
+    name: "income",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchExpenses.pending, (state) => {
+            .addCase(fetchIncomes.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchExpenses.fulfilled, (state, action: PayloadAction<Expense[]>) => {
+            .addCase(fetchIncomes.fulfilled, (state, action: PayloadAction<Income[]>) => {
                 state.loading = false;
-                state.expenses = action.payload;
+                state.incomes = action.payload;
             })
-            .addCase(fetchExpenses.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
+            .addCase(fetchIncomes.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
                 state.loading = false;
-                state.error = action.payload?.message || 'Failed to fetch expenses';
+                state.error = action.payload?.message || 'Failed to fetch incomes';
             })
-            .addCase(addExpense.pending, (state) => {
+            .addCase(addIncome.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(addExpense.fulfilled, (state, action: PayloadAction<ExpensePayload>) => {
+            .addCase(addIncome.fulfilled, (state, action: PayloadAction<IncomePayload>) => {
                 state.loading = false;
-                state.expenses.push(action.payload.expense);
+                state.incomes.push(action.payload.income);
             })
-            .addCase(addExpense.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
+            .addCase(addIncome.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
                 state.loading = false;
-                state.error = action.payload?.message || 'Failed to add expense';
+                state.error = action.payload?.message || 'Failed to add income';
             })
-            .addCase(updateExpense.pending, (state) => {
+            .addCase(updateIncome.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(updateExpense.fulfilled, (state, action: PayloadAction<ExpensePayload>) => {
+            .addCase(updateIncome.fulfilled, (state, action: PayloadAction<IncomePayload>) => {
                 state.loading = false;
-                const index = state.expenses.findIndex(expense => expense.id === action.payload.expense.id);
+                const index = state.incomes.findIndex(income => income.id === action.payload.income.id);
                 if (index !== -1) {
-                    state.expenses[index] = action.payload.expense;
+                    state.incomes[index] = action.payload.income;
                 }
             })
-            .addCase(updateExpense.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
+            .addCase(updateIncome.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
                 state.loading = false;
-                state.error = action.payload?.message || 'Failed to update expense';
+                state.error = action.payload?.message || 'Failed to update income';
             })
-            .addCase(deleteExpense.pending, (state) => {
+            .addCase(deleteIncome.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(deleteExpense.fulfilled, (state, action: PayloadAction<string>) => {
+            .addCase(deleteIncome.fulfilled, (state, action: PayloadAction<string>) => {
                 state.loading = false;
-                state.expenses = state.expenses.filter(expense => expense.id !== action.payload);
+                state.incomes = state.incomes.filter(income => income.id !== action.payload);
             })
-            .addCase(deleteExpense.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
+            .addCase(deleteIncome.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
                 state.loading = false;
-                state.error = action.payload?.message || 'Failed to delete expense';
+                state.error = action.payload?.message || 'Failed to delete income';
             });
     }
 });
 
-export default expenseSlice.reducer;
+export default incomeSlice.reducer;

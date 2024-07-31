@@ -1,5 +1,3 @@
-// src/pages/LandingPage.tsx
-
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Moto from "../components/Moto";
