@@ -118,7 +118,7 @@ const Income: React.FC = () => {
         <RightPart>
           <h1 className="mb-3">Incomes</h1>
           <Link to="/income/add">
-            <button className="mb-4 py-2 px-4 text-sm tracking-wide rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+            <button className="mb-4 py-2 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 focus:outline-none">
               Add Income
             </button>
           </Link>

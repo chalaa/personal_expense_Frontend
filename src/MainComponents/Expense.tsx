@@ -98,7 +98,7 @@ const Expense: React.FC = () => {
     renderTopToolbarCustomActions: ({ table }) => (
       <div className="flex flex-row flex-wrap">
         <button
-          className="mb-4 py-2 px-4 text-sm tracking-wide rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none"
+          className="mb-4 py-2 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 focus:outline-none"
           onClick={() =>
             handleExportPDF(table.getPrePaginationRowModel().rows)
           }
@@ -119,7 +119,7 @@ const Expense: React.FC = () => {
         <RightPart>
           <h1 className="mb-3">Expenses</h1>
           <Link to= "/expense/add">
-            <button className="mb-4 py-2 px-4 text-sm tracking-wide rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none">
+            <button className="mb-4 py-2 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 focus:outline-none">
               Add Expense
             </button>
           </Link>
