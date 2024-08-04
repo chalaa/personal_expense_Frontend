@@ -48,7 +48,6 @@ const DashBoardRightPart: React.FC = () => {
           <div className="bg-white p-4 rounded-lg shadow-lg mb-6 col-span-1 sm:col-span-1 lg:col-span-2">
             <BarChart label={categoryLabel} datavalues={categoryAmount}/>
           </div>
-            
         </div>
         
     </RightPart>

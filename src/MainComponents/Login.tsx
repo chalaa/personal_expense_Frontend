@@ -26,7 +26,7 @@ const Login: React.FC = () => {
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
         <div className="max-w-md w-full">
           <div className="flex justify-center mb-6">
-            <Link to="/" className="text-2xl font-extrabold text-blue-600">
+            <Link to="/" className="text-2xl font-extrabold text-black-600">
               Expense Manager
             </Link>
           </div>

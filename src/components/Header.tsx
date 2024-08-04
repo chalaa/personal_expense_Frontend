@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 import { logout } from '../store/authSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const toggleMenu = () => {
@@ -19,7 +18,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-cyan-500 text-white p-4 flex justify-between items-center px-4 sm:px-10">
+    <header className="bg-red-600 text-white p-4 flex justify-between items-center px-4 sm:px-10">
       <div className="text-2xl font-bold">
         Personal Expense Tracker
       </div>
@@ -31,7 +30,7 @@ const Header: React.FC = () => {
       </button>
       <div className={`w-full sm:flex sm:items-center sm:w-auto ${isOpen ? 'block' : 'hidden'}`}>
         <div className="flex flex-col sm:flex-row sm:ml-auto">
-          {user ? (
+          {localStorage.getItem("token") ? (
             <>
               <Link to="/dashboard" className="mr-0 sm:mr-4 p-2 sm:p-0">
                 Dashboard

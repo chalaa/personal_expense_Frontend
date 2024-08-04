@@ -10,47 +10,37 @@ import {
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import RightPart from "../components/RightPart";
-import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../components/Modal";
+import { useMemo } from "react";
+import {
+  MantineReactTable,
+  useMantineReactTable,
+  type MRT_ColumnDef,
+} from "mantine-react-table";
+interface Category {
+  id: string;
+  name: string;
+}
 
 const Category: React.FC = () => {
-  const columns = [
-    {
-      name: "ID",
-      selector: (row: { id: string }) => row.id,
-      sortable: true,
-    },
-    {
-      name: "Name",
-      selector: (row: { name: string }) => row.name,
-      sortable: true,
-    },
-    {
-      name: "Actions",
-      cell: (row: { id: string }) => (
-        <div className="flex gap-3">
-          <button
-            className="cursor-pointer"
-            onClick={() => {
-              const category = categories.find((cat) => cat.id === row.id);
-              openUpdateModal({ id: row.id, name: category?.name || "" });
-            }}
-          >
-            <FontAwesomeIcon icon={faEdit} color="blue" />
-          </button>
-          <button
-            className="cursor-pointer"
-            onClick={() => handleDeleteCategory(row.id)}
-          >
-            <FontAwesomeIcon icon={faTrash} color="red" />
-          </button>
-        </div>
-      ),
-    },
-  ];
 
+  const columns = useMemo<MRT_ColumnDef<Category>[]>(
+    () => [
+      {
+        accessorKey: "id",
+        header: "ID",
+        sorting: true,
+      },
+      {
+        accessorKey: "name",
+        header: "Category",
+        sorting: true,
+      },
+    ],
+    []
+  );
   const [formData, setFormData] = useState({ name: "" });
   const [updateFormData, setUpdateFormData] = useState({ id: "", name: "" });
   const [showModal, setShowModal] = useState(false);
@@ -59,7 +49,7 @@ const Category: React.FC = () => {
   const { categories, loading, error } = useSelector(
     (state: RootState) => state.category
   );
-
+  console.log("our categories are", categories)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -96,6 +86,33 @@ const Category: React.FC = () => {
     setShowModal(false);
   };
 
+  const table = useMantineReactTable({
+    columns,
+    data: categories,
+    enableSorting: true,
+    enableRowActions: true,
+    positionToolbarAlertBanner: "bottom",
+    renderRowActions: ({ row }) => (
+      
+      <div className="flex gap-3">
+        <button
+          className="cursor-pointer"
+          onClick={() => {
+            const category = categories.find((cat) => cat.id === row.original.id);
+            openUpdateModal({ id: row.original.id, name: category?.name || "" });
+          }}
+        >
+          <FontAwesomeIcon icon={faEdit} color="blue" />
+        </button>
+        <button
+          className="cursor-pointer"
+          onClick={() => handleDeleteCategory(row.original.id)}
+        >
+          <FontAwesomeIcon icon={faTrash} color="red" />
+        </button>
+      </div>
+    ),
+  });
   return (
     <>
       <Header />
@@ -132,16 +149,8 @@ const Category: React.FC = () => {
               </div>
             </form>
           </div>
-          <h1>Categories</h1>
           {loading && <p>Loading...</p>}
-          <DataTable
-            columns={columns}
-            data={categories}
-            pagination
-            fixedHeader
-            fixedHeaderScrollHeight="300px"
-            responsive={true}
-          />
+          <MantineReactTable table={table} />
         </RightPart>
       </div>
       <Modal show={showModal} onClose={closeUpdateModal}>
@@ -160,8 +169,11 @@ const Category: React.FC = () => {
                 className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
                 placeholder="Update category name"
               />
+              
             </div>
+
           </div>
+          <p>{updateFormData.name}</p>
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           <div className="!mt-8">
             <button
