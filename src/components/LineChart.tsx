@@ -23,19 +23,25 @@ ChartJS.register(
   Legend
 );
 
-const LineChart: React.FC = () => {
+interface LineChatProps {
+  expensedatavalues : number[];
+  incomedatavalue: number[],
+  label : string[];
+}
+
+const LineChart: React.FC<LineChatProps> = ({expensedatavalues,label,incomedatavalue}) => {
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: label,
     datasets: [
       {
         label: 'Expenses',
-        data: [3000, 400, 200, 300, 500, 700],
+        data: expensedatavalues,
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
       },
       {
         label: 'Income',
-        data: [500, 700, 300, 400, 600, 800],
+        data: incomedatavalue,
         borderColor: 'rgba(153, 102, 255, 1)',
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
       },

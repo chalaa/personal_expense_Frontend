@@ -42,9 +42,8 @@ export const fetchExpenses = createAsyncThunk<
 >(
     "expense/fetchExpenses",
     async (_, { getState, rejectWithValue }) => {
-        const token = getState().auth.token;
-        try {
-            const { data } = await axios.get("http://127.0.0.1:8000/api/expense", {
+const token = localStorage.getItem('token');        try {
+            const { data } = await axios.get("https://expense.ethioace.com/api/expense", {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -72,9 +71,8 @@ export const addExpense = createAsyncThunk<
 >(
     "expense/addExpense",
     async (expenseData, { getState, rejectWithValue }) => {
-        const token = getState().auth.token;
-        try {
-            const { data } = await axios.post("http://127.0.0.1:8000/api/expense", {"amount":expenseData.amount,"date":expenseData.date,"description":expenseData.description,"category_id":expenseData.category.id}, {
+const token = localStorage.getItem('token');        try {
+            const { data } = await axios.post("https://expense.ethioace.com/api/expense", {"amount":expenseData.amount,"date":expenseData.date,"description":expenseData.description,"category_id":expenseData.category.id}, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -103,9 +101,8 @@ export const updateExpense = createAsyncThunk<
 >(
     "expense/updateExpense",
     async (expenseData, { getState, rejectWithValue }) => {
-        const token = getState().auth.token;
-        try {
-            const { data } = await axios.put(`http://127.0.0.1:8000/api/expense/${expenseData.id}`, expenseData, {
+const token = localStorage.getItem('token');        try {
+            const { data } = await axios.put(`https://expense.ethioace.com/api/expense/${expenseData.id}`, expenseData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -133,9 +130,8 @@ export const deleteExpense = createAsyncThunk<
 >(
     "expense/deleteExpense",
     async ({ id }, { getState, rejectWithValue }) => {
-        const token = getState().auth.token;
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/expense/${id}`, {
+const token = localStorage.getItem('token');        try {
+            await axios.delete(`https://expense.ethioace.com/api/expense/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,

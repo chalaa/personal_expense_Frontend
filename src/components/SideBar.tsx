@@ -52,14 +52,6 @@ const SideBar: React.FC = () => {
                 </Link>
             </div>
           </li>
-          <li>
-            <div className="text-black hover:text-blue-600 text-sm flex items-center hover:bg-blue-50 rounded px-4 py-3 transition-all gap-3">
-                <FontAwesomeIcon icon={faGauge}/>
-                <Link to="/account">
-                My acount
-                </Link>
-            </div>
-          </li>
         </ul>
       </nav>
     </>

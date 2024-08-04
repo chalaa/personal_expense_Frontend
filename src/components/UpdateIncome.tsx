@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/index";
-import { updateIncome } from "../store/incomeSclice";
+import { updateIncome } from "../store/incomeSlice";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
 import RightPart from "../components/RightPart";

@@ -21,13 +21,18 @@ ChartJS.register(
   Legend
 );
 
-const BarChart: React.FC = () => {
+interface BarChartProps {
+  datavalues : number[];
+  label : string[];
+}
+
+const BarChart: React.FC<BarChartProps> = ({datavalues,label}) => {
   const data = {
-    labels: ['Food', 'Transport', 'Entertainment', 'Utilities', 'Miscellaneous'],
+    labels: label,
     datasets: [
       {
         label: 'Expenses',
-        data: [200, 50, 75, 150, 100],
+        data: datavalues,
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,

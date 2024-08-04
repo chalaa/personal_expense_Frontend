@@ -37,7 +37,7 @@ export const registerUser = createAsyncThunk<
   'auth/registerUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/register", userData);
+      const response = await axios.post("https://expense.ethioace.com/api/register", userData);
       
       return response.data;
     } catch (error) {
@@ -58,7 +58,7 @@ export const loginUser = createAsyncThunk<
   'auth/loginUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login', userData);
+      const response = await axios.post('https://expense.ethioace.com/api/login', userData);
       return response.data;
     } catch (error) {
       let errorMessage = 'An error occurred';
@@ -77,6 +77,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+      localStorage.removeItem('token');
     },
   },
   extraReducers: (builder) => {
@@ -102,6 +103,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = {name:action.payload.user.name,email:action.payload.user.email};
         state.token = action.payload.authorisation.token;
+        localStorage.setItem('token',action.payload.authorisation.token);
       })
       .addCase(loginUser.rejected, (state, action: PayloadAction<ErrorResponse | undefined>) => {
         state.loading = false;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/index";
-import { fetchIncomes, deleteIncome } from "../store/incomeSclice";
+import { fetchIncomes, deleteIncome } from "../store/incomeSlice";
 import { fetchCategories } from "../store/categorySlice";
 import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
