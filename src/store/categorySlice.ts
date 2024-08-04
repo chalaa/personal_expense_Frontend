@@ -31,7 +31,7 @@ export const fetchCategories = createAsyncThunk<
   Category[],
   void,
   { rejectValue: ErrorResponse; state: RootState }
->("category/fetchCategories", async (_, { getState, rejectWithValue }) => {
+>("category/fetchCategories", async (_, {rejectWithValue }) => {
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.get(
@@ -60,7 +60,7 @@ export const addCategory = createAsyncThunk<
   { rejectValue: ErrorResponse }
 >(
   "category/addCategory",
-  async (categoryData: { name: string }, { getState, rejectWithValue }) => {
+  async (categoryData: { name: string }, {rejectWithValue }) => {
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(
@@ -93,7 +93,7 @@ export const updateCategory = createAsyncThunk<
   "category/updateCategory",
   async (
     categoryData: { id: string; name: string },
-    { rejectWithValue, getState }
+    { rejectWithValue}
   ) => {
     const token = localStorage.getItem("token");
     try {
@@ -123,7 +123,7 @@ export const deleteCategory = createAsyncThunk<
   string,
   { id: string },
   { rejectValue: ErrorResponse; state: RootState }
->("category/deleteCategory", async ({ id }, { rejectWithValue, getState }) => {
+>("category/deleteCategory", async ({ id }, { rejectWithValue}) => {
   const token = localStorage.getItem("token");
   try {
     await axios.delete(`https://expense.ethioace.com/api/category/${id}`, {
