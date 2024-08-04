@@ -15,6 +15,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
     const expirationTimestamp = token?jwtDecode(token).exp:null;
     if (!expirationTimestamp || expirationTimestamp < currentTimestampInSeconds ){
+      localStorage.removeItem('token');
       return <Navigate to="/login" replace />;
     }
     return children;
