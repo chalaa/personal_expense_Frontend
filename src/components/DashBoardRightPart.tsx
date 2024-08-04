@@ -13,8 +13,6 @@ const DashBoardRightPart: React.FC = () => {
   const expense = state.expense
   const income = state.income
   const category = state.category
-  const loading = state.loading
-  const error = state.error
   
   const expenseDate: string[] = [];
   const expenseAmount: number[] = [];
