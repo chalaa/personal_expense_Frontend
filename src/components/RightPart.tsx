@@ -6,8 +6,8 @@ interface RightPartProps {
 
 const RightPart: React.FC<RightPartProps> = ({children}) => {
   return (
-    <div className="p-6 ml-0 w-4/5 h-screen">
-      <div className="bg-gray-100 p-6 rounded-lg shadow-lg h-full">
+    <div className="p-6 lg:ml-64 w-5/6 mt-20 h-screen bg-white">
+      <div className="p-6 rounded-lg shadow-lg min-h-full">
         {children}
       </div>
     </div>

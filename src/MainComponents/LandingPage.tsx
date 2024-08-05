@@ -8,7 +8,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Header />
-        <div className="text-black min-h-screen flex py-12 justify-center w-full">
+        <div className="text-black min-h-screen flex py-12 justify-center w-full mt-20 fixed">
           <div className="text-center max-w-2xl">
             <h1 className="text-4xl font-bold text-red-500 mb-6">
               Personal Expense Tracker

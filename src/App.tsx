@@ -26,7 +26,7 @@ const App: React.FC = () => {
   }, [user]);
 
   return (
-    <div className="bg-slate-100">
+    <div className="bg-white">
       <Router>
         <Routes>
           <Route path="/" element={user ? <Navigate to="/dashboard" /> : <LandingPage />} />

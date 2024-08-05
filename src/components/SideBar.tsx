@@ -11,7 +11,7 @@ const SideBar: React.FC = () => {
   };
 
   return (
-    <div className="z-10">
+    <div className="z-10 fixed mt-12">
       <button
         className="sm:hidden bg-cyan-700 p-2 rounded fixed  left-4 z-50 mt-2"
         onClick={toggleSidebar}
