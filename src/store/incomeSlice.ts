@@ -30,6 +30,8 @@ interface ErrorResponse {
   message: string;
 }
 
+const url: string = (import.meta.env.VITE_BASE_URL as string)
+
 // Fetch Incomes
 export const fetchIncomes = createAsyncThunk<
   Income[],
@@ -40,7 +42,7 @@ export const fetchIncomes = createAsyncThunk<
 >("income/fetchIncomes", async (_, {rejectWithValue }) => {
   const token = localStorage.getItem("token");
   try {
-    const { data } = await axios.get("https://expense.ethioace.com/api/income", {
+    const { data } = await axios.get(`${url}/income`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -67,7 +69,7 @@ export const addIncome = createAsyncThunk<
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.post(
-      "https://expense.ethioace.com/api/income",
+      `${url}/income`,
       {
         amount: incomeData.amount,
         date: incomeData.date,
@@ -108,7 +110,7 @@ export const updateIncome = createAsyncThunk<
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.put(
-      `https://expense.ethioace.com/api/income/${incomeData.id}`,
+      `${url}/income/${incomeData.id}`,
       incomeData,
       {
         headers: {
@@ -137,7 +139,7 @@ export const deleteIncome = createAsyncThunk<
 >("income/deleteIncome", async ({ id }, {rejectWithValue }) => {
   const token = localStorage.getItem("token");
   try {
-    await axios.delete(`https://expense.ethioace.com/api/income/${id}`, {
+    await axios.delete(`${url}/income/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

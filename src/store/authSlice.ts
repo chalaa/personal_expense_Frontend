@@ -15,6 +15,7 @@ const initialState: AuthState = {
   error: null,
 };
 
+const url: string = (import.meta.env.VITE_BASE_URL as string)
 interface RegisterUserPayload {
   user: { name: string; email: string };
   authorisation : {token: string ; type:string;  status:string };
@@ -37,8 +38,8 @@ export const registerUser = createAsyncThunk<
   'auth/registerUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://expense.ethioace.com/api/register", userData);
-      
+      const response = await axios.post(`${url}/register`, userData);
+      console.log(response)
       return response.data;
     } catch (error) {
       let errorMessage = 'An error occurred';
@@ -58,11 +59,14 @@ export const loginUser = createAsyncThunk<
   'auth/loginUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('https://expense.ethioace.com/api/login', userData);
+      console.log("is logging")
+      console.log("env is", url)
+      const response = await axios.post(`${url}/login`, userData);
       return response.data;
     } catch (error) {
       let errorMessage = 'An error occurred';
       if (axios.isAxiosError(error) && error.response) {
+        console.log("login response is",errorMessage)
         errorMessage = error.response.data.message;
       }
       return rejectWithValue({ message: errorMessage });

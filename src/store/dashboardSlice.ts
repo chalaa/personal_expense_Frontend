@@ -36,6 +36,8 @@ interface ErrorResponse {
   message: string;
 }
 
+const url: string = (import.meta.env.VITE_BASE_URL as string)
+
 export const fetchDashboard = createAsyncThunk<
   Dashboard,
   void,
@@ -44,7 +46,7 @@ export const fetchDashboard = createAsyncThunk<
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.get(
-      "https://expense.ethioace.com/api/dashboard",
+      `${url}/dashboard`,
       {
         headers: {
           "Content-Type": "application/json",

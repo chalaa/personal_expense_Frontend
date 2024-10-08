@@ -26,6 +26,9 @@ interface ErrorResponse {
   message: string;
 }
 
+const url: string = (import.meta.env.VITE_BASE_URL as string)
+
+
 // Fetch categories
 export const fetchCategories = createAsyncThunk<
   Category[],
@@ -35,7 +38,7 @@ export const fetchCategories = createAsyncThunk<
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.get(
-      "https://expense.ethioace.com/api/category",
+      `${url}/category`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +67,7 @@ export const addCategory = createAsyncThunk<
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        "https://expense.ethioace.com/api/category",
+        `${url}/category`,
         categoryData,
         {
           headers: {
@@ -98,7 +101,7 @@ export const updateCategory = createAsyncThunk<
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.put(
-        `https://expense.ethioace.com/api/category/${categoryData.id}`,
+        `${url}/category/${categoryData.id}`,
         categoryData,
         {
           headers: {
@@ -126,7 +129,7 @@ export const deleteCategory = createAsyncThunk<
 >("category/deleteCategory", async ({ id }, { rejectWithValue}) => {
   const token = localStorage.getItem("token");
   try {
-    await axios.delete(`https://expense.ethioace.com/api/category/${id}`, {
+    await axios.delete(`${url}/category/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
